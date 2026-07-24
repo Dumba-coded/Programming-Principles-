@@ -1,0 +1,3 @@
+P001|Instagram|Python tips for beginners|15/07/2026|Posted
+P002|TikTok|Study routine for examination week|18/07/2026|Scheduled
+P003|X|Three useful programming reminders|20/07/2026|Draft
