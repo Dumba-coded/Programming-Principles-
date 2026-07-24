@@ -1,4 +1,1 @@
-ts=esth
-
-
-efrgvwebtgvo
+print("Hello, World!")
