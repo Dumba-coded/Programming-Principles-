@@ -1,3 +1,5 @@
+from datetime import datetime
+
 RED = '\033[31m'
 GREEN = '\033[32m'
 YELLOW = '\033[33m'
@@ -24,7 +26,7 @@ def add_post():
     
     print("\n--- Add New Post ---")
     
-    # 1. Get Post ID (must not be empty and must start with P)
+    # 1. Get Post ID (must not be empty)
     post_id = input("Enter Post ID: ").upper()
     if post_id.strip() == "":
         print("Invalid input. Post ID cannot be empty.")
@@ -34,8 +36,16 @@ def add_post():
         return
     
     # 2. Get Platform (must be one of the 3 allowed platforms)
+    
+    
     platform = input("Enter Platform (Instagram / TikTok / X): ")
-    if platform not in ["Instagram", "TikTok", "X"]:
+    
+    platform_names = {
+        "instagram": "Instagram",
+        "tiktok": "TikTok",
+        "x": "X"} 
+    
+    if platform not in platform_names:
         print("Invalid platform. Must be Instagram, TikTok, or X.")
         return
     
