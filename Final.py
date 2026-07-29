@@ -145,8 +145,9 @@ def update_post():
 def record_engagement_metrics():
     
     print(f"{YELLOW}\n--- RECORD ENGAGEMENT METRICS ---{RESET}")
-
     
+    
+
     
 def display_content_calendar():
     print
