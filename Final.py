@@ -1,7 +1,7 @@
 from datetime import datetime
 
-
-def exit_program(): #lw
+# Exit the program gracefully with a goodbye message.
+def exit_program():
     print("\nThanks for using the Social Media Planner. Goodbye!")
     exit() # A built-in function that terminates the program immediately.
 
@@ -234,7 +234,7 @@ def main():
         elif choice == "6":
             export_report()
         elif choice == "7":
-            Exit()
+            exit_program()
             break
         else:
             print("Invalid choice. Please enter a number from 1 to 7.")
