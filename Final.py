@@ -57,14 +57,16 @@ def add_post():
         return
 
     # 2. Get Platform (must be one of the 3 allowed platforms)
-    platform = input("Enter Platform (Instagram / TikTok / X): ").strip().lower()
+    platform = input("Enter Platform (Instagram / TikTok / X): ")
+    
+    Platform_input = platform.strip().lower()
     
     platform_names = {
         "instagram": "Instagram",
         "tiktok": "TikTok",
         "x": "X"} 
     
-    if platform not in platform_names:
+    if Platform_input not in platform_names:
         print("Invalid platform. Must be Instagram, TikTok, or X.")
         return
     
