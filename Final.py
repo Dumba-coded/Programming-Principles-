@@ -108,6 +108,8 @@ def add_post():
     print("Post added successfully!")
 
 
+
+
 # Update the status of an existing post.
 def update_post():
     
@@ -183,10 +185,14 @@ def update_post():
     print("Status updated successfully.")
 
 
+
+
 # Allow user to record engagement metrics for a specific post.
 def record_engagement_metrics():
     
     print(f"\n--- RECORD ENGAGEMENT METRICS ---")
+
+
 
 
 # Show the content calendar with all posts and their statuses.
@@ -218,6 +224,8 @@ def display_content_calendar():
         print(f"{post_id:<10}{date:<13}{platform:<15}{status}")
 
     print("=========================================================")
+
+
 
 
 # Display a summary of engagement metrics for all posts.
@@ -329,12 +337,14 @@ def generate_performance_report():
             best_post_id, best_platform, best_total,
             most_interactive_platform, highest_engagement)
 
+
+
+
 # Export the performance report to a text file.
 def export_report(instagram_count, tiktok_count, x_count,
                 best_post_id, best_platform, best_total,
                 most_interactive_platform, highest_engagement):
     
-
     report = "=====================================\n"
     report += "PERFORMANCE REPORT\n"
     report += "=====================================\n"
@@ -355,6 +365,8 @@ def export_report(instagram_count, tiktok_count, x_count,
         file.write(report)
 
     print("Report exported successfully!")
+
+
 
 
 # Main program.
