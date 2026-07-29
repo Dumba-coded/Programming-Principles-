@@ -11,9 +11,7 @@ REPORT_FILE = "report.txt"
 def display_menu():
     """Display all seven program options."""
 
-    print("\n=====================================")
-    print("SOCIAL MEDIA CONTENT PLANNER")
-    print("=====================================")
+    print("\n========== SOCIAL MEDIA CONTENT PLANNER ==========")
     print("1. Add New Post")
     print("2. Update Post Status")
     print("3. Record Engagement Metrics")
@@ -27,10 +25,13 @@ def add_post():
     
     print("\n--- Add New Post ---")
     
-    # 1. Get Post ID (must not be empty)
+    # 1. Get Post ID (must not be empty and must start with P)
     post_id = input("Enter Post ID: ").upper()
     if post_id.strip() == "":
         print("Invalid input. Post ID cannot be empty.")
+        return
+    if not post_id.startswith("P"):
+        print("Invalid Post ID. Post ID must start with 'P' (e.g. P011).")
         return
     
     # 2. Get Platform (must be one of the 3 allowed platforms)
