@@ -41,6 +41,8 @@ def display_menu():
     print("7. Exit")# change to "Press X/type [keyword] (ex.exit) to exit the programm at any given moment"
 
 
+
+
 # ----- Add a new post to the posts.txt file -----
 def add_post():
     
