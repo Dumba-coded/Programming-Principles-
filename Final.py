@@ -1,4 +1,22 @@
 
+from datetime import date #lw
+
+def exit_program(): #lw
+    print("\nThanks for using the Social Media Planner. Goodbye!")
+    exit() #a built-in function that terminates the program immediately.
+
+# save original input
+original_input = input
+
+# safe input function
+def safe_input(prompt): #prompt = the text you pass when asking the user for input
+    user_input = original_input(prompt)  #whatever the user types will be stored in 'user_input'
+    if user_input.lower() in ["x", "exit", "end"]: #converts input to lowercase
+        exit_program()
+    return user_input
+
+# override input globally
+input = safe_input #replaces Python's built-in 'input' function with safe_input
 
 
 def display_menu():
@@ -31,12 +49,30 @@ def display_content_calendar():
 def generate_performance_report():
     print
     
-def export_report_to_file():
-    print
+def export_report(): #lw
+    posts_per_platform, best_post, most_interactive_platform, total_posts, avg_engagement = generate_report()
+    report = "=== PERFORMANCE REPORT ===\n"
+    report += f"Generated on: {date.today()}\n\n"
+
+    report += "Posts per Platform:\n"
+
+    for platform, data in posts_per_platform.items():
+        report += f"{platform:<10}: {data['posts']} post (Followers: {data['followers']})\n"
+
+    report += "\n"
+    report += f"Best Post: {best_post['id']} ({best_post['platform']}, {best_post['likes']} likes, {best_post['shares']} shares)\n"
+    report += f"Most Interactive Platform: {most_interactive_platform['name']} (Total Engagement: {most_interactive_platform['engagement']})\n"
+
+    report += "\nOverall Stats:\n"
+    report += f"Total Posts: {total_posts}\n"
+    report += f"Average Engagement per Post: {avg_engagement}\n"
+
+    with open("report.txt", "w") as file:
+        file.write(report)
+
+    print("Report exported successfully!")
+
     
-    """If We manage to allow user to exit at any given moment this will be a function as well"""
-def Exit():
-    print("Program ended successfully.")
 
 def main():
 
@@ -56,11 +92,14 @@ def main():
         elif choice == "5":
             generate_performance_report()
         elif choice == "6":
-            export_report_to_file()
+            export_report()
         elif choice == "7":
             break
         else:
             print("Invalid choice. Please enter a number from 1 to 7.")
+
+
+
 
 main()# runs forevrrrrr, Keeps running the menu after all commands are done until the user chooses Exit
 
