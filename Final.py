@@ -178,7 +178,7 @@ def update_post():
 def record_engagement_metrics():
     
     print(f"\n--- RECORD ENGAGEMENT METRICS ---")
-    
+
 
 # Show the content calendar with all posts and their statuses.
 def display_content_calendar():
@@ -247,6 +247,7 @@ def generate_performance_report():
         print("No engagement data found. Please record engagement first.")
         return
 
+
     # 4. Go through every engagement record to find the best post
     best_post_id = ""
     best_platform = ""
@@ -287,6 +288,7 @@ def generate_performance_report():
             best_total = total_engagement
             best_post_id = post_id
             best_platform = platform_of_this_post
+
 
     # 5. Work out which platform has the most total interaction
     most_interactive_platform = "Instagram"
@@ -368,7 +370,6 @@ def main():
             break
         else:
             print("Invalid choice. Please enter a number from 1 to 7.")
-
 
 main() # Runs forevrrrrr, Keeps running the menu after all commands are done until the user chooses Exit
 
