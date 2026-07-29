@@ -58,7 +58,7 @@ def add_post():
 
 
     # 2. Get Platform (must be one of the 3 allowed platforms)
-    platform = input("Enter Platform (Instagram / TikTok / X): ")
+    platform = input("Enter Platform (Instagram / TikTok / X): ").strip().lower()
     
     platform_names = {
         "instagram": "Instagram",
