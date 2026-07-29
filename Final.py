@@ -26,6 +26,7 @@ input = safe_input # Replaces Python's built-in 'input' function with safe_input
 
 
 
+
 # ----- Display all seven program options -----
 def display_menu():
     
@@ -39,6 +40,8 @@ def display_menu():
     print("5. Generate Performance Report")
     print("6. Export Report to File")
     print("7. Exit")# change to "Press X/type [keyword] (ex.exit) to exit the programm at any given moment"
+
+
 
 
 # ----- Add a new post to the posts.txt file -----
