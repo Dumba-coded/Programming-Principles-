@@ -212,9 +212,8 @@ def export_report():
 
     print("Report exported successfully!")
 
-    
 
-
+# Main program.
 def main():
 
     while True:
@@ -239,8 +238,6 @@ def main():
             break
         else:
             print("Invalid choice. Please enter a number from 1 to 7.")
-
-
 
 
 main() # Runs forevrrrrr, Keeps running the menu after all commands are done until the user chooses Exit
