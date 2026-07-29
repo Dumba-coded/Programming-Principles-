@@ -352,7 +352,21 @@ def export_report(instagram_count, tiktok_count, x_count,
                 best_post_id, best_platform, best_total,
                 most_interactive_platform, highest_engagement):
     
-    
+    report = "=====================================\n"
+    report += "PERFORMANCE REPORT\n"
+    report += "=====================================\n"
+    report += "Total Posts Per Platform\n"
+    report += f"Instagram : {instagram_count}\n"
+    report += f"TikTok    : {tiktok_count}\n"
+    report += f"X         : {x_count}\n\n"
+
+    report += "Best Performing Post\n"
+    report += f"Post ID   : {best_post_id}\n"
+    report += f"Platform  : {best_platform}\n"
+    report += f"Total Engagement: {best_total}\n\n"
+
+    report += "Most Interactive Platform\n"
+    report += f"{most_interactive_platform} (Total Engagement: {highest_engagement})\n"
 
     with open("report.txt", "w") as file:
         file.write(report)
