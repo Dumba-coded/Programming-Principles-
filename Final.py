@@ -26,6 +26,7 @@ input = safe_input # Replaces Python's built-in 'input' function with safe_input
 
 
 
+
 # ----- Display all seven program options -----
 def display_menu():
     
