@@ -104,7 +104,7 @@ def update_post():
     try:
         with open(POST_FILE, "r") as file:
             lines = file.readlines()
-    except FileNotFoundError:
+    except FileNotFoundError: # Catch the error if the file does not exist
         print("No posts found. Please add a post first.")
         return
  
@@ -186,8 +186,10 @@ def display_content_calendar():
 # Display a summary of engagement metrics for all posts.
 def generate_performance_report():
     print
-    
-def export_report(): #lw
+
+
+# Export the performance report to a text file.
+def export_report():
     posts_per_platform, best_post, most_interactive_platform, total_posts, avg_engagement = generate_report()
     report = "=== PERFORMANCE REPORT ===\n"
     report += f"Generated on: {date.today()}\n\n"
