@@ -317,8 +317,9 @@ def generate_performance_report():
     print("\nMost Interactive Platform")
     print(most_interactive_platform)
 
-    
-def export_report(): #lw
+
+# Export the performance report to a text file.
+def export_report():
     posts_per_platform, best_post, most_interactive_platform, total_posts, avg_engagement = generate_performance_report()
     report = "=== PERFORMANCE REPORT ===\n"
     report += f"Generated on: {datetime.now()}\n\n"
