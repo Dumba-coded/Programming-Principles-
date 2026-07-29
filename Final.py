@@ -28,16 +28,16 @@ def add_post():
     
     # 1. Get Post ID (must not be empty)
     post_id = input("Enter Post ID: ").upper()
+    
     if post_id.strip() == "":
         print("Invalid input. Post ID cannot be empty.")
         return
     if not post_id.startswith("P"):
         print("Invalid Post ID. Post ID must start with 'P' (e.g. P011).")
         return
-    
+
+
     # 2. Get Platform (must be one of the 3 allowed platforms)
-    
-    
     platform = input("Enter Platform (Instagram / TikTok / X): ")
     
     platform_names = {
@@ -51,12 +51,14 @@ def add_post():
     
     # 3. Get Caption (must not be empty)
     caption = input("Enter Caption: ")
+    
     if caption.strip() == "":
         print("Invalid input. Caption cannot be empty.")
         return
     
     # 4. Get Scheduled Date (must be a real date in DD-MM-YYYY format)
     date = input("Enter Scheduled Date (DD-MM-YYYY): ")
+    
     try:
         datetime.strptime(date, "%d-%m-%Y")
     except ValueError:
@@ -151,26 +153,32 @@ def update_post():
  
     print("Status updated successfully.")
 
-    
+
+# Allow user to record engagement metrics for a specific post.
 def record_engagement_metrics():
     
     print(f"{YELLOW}\n--- RECORD ENGAGEMENT METRICS ---{RESET}")
     
-    
 
-    
+# Show the content calendar with all posts and their statuses.
 def display_content_calendar():
     print
 
+
+# Display a summary of engagement metrics for all posts.
 def generate_performance_report():
     print
-    
+
+
+# Export the performance report to a text file.
 def export_report_to_file():
     print
-    
-    """If We manage to allow user to exit at any given moment this will be a function as well"""
+
+ 
+# If We manage to allow user to exit at any given moment this will be a function as well
 def Exit():
     print(f"{YELLOW}Program ended successfully.{RESET}")
+
 
 def main():
 
@@ -197,5 +205,5 @@ def main():
         else:
             print(f"{RED}Invalid choice. Please enter a number from 1 to 7.{RESET}")
 
-main()# runs forevrrrrr, Keeps running the menu after all commands are done until the user chooses Exit
+main() # Runs forevrrrrr, Keeps running the menu after all commands are done until the user chooses Exit
 
