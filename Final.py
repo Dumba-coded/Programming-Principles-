@@ -23,7 +23,7 @@ input = safe_input #replaces Python's built-in 'input' function with safe_input
 
 POST_FILE = "posts.txt"
 ENGAGEMENT_FILE = "engagement.txt"
-REPORT_FILE = "report.txt"
+# REPORT_FILE = "report.txt"
 
 
 
