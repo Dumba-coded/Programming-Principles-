@@ -175,24 +175,50 @@ def update_post():
 # Allow user to record engagement metrics for a specific post.
 def record_engagement_metrics():
     
-    print(f"{YELLOW}\n--- RECORD ENGAGEMENT METRICS ---{RESET}")
+    print(f"\n--- RECORD ENGAGEMENT METRICS ---")
     
 
 # Show the content calendar with all posts and their statuses.
 def display_content_calendar():
-    print
+
+
+    try:
+        with open(POST_FILE, "r") as file:
+            lines = file.readlines()
+    except FileNotFoundError:
+        print("No posts found.")
+        return
+
+    if len(lines) == 0:
+        print("No posts found.")
+        return
+
+    print("\n=========================================================")
+    print(f"{'POST ID':<10}{'DATE':<13}{'PLATFORM':<15}{'STATUS'}")
+    print("=========================================================")
+
+    for line in lines:
+        fields = line.strip().split("|")
+
+        post_id = fields[0]
+        platform = fields[1]
+        date = fields[3].replace("-", "/")   # Changes DD-MM-YYYY to DD/MM/YYYY
+        status = fields[4]
+
+        print(f"{post_id:<10}{date:<13}{platform:<15}{status}")
+
+    print("=========================================================")
 
 
 # Display a summary of engagement metrics for all posts.
 def generate_performance_report():
     print
 
-
-# Export the performance report to a text file.
-def export_report():
-    posts_per_platform, best_post, most_interactive_platform, total_posts, avg_engagement = generate_report()
+    
+def export_report(): #lw
+    posts_per_platform, best_post, most_interactive_platform, total_posts, avg_engagement = generate_performance_report()
     report = "=== PERFORMANCE REPORT ===\n"
-    report += f"Generated on: {date.today()}\n\n"
+    report += f"Generated on: {datetime.now()}\n\n"
 
     report += "Posts per Platform:\n"
 
