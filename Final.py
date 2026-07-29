@@ -13,7 +13,7 @@ original_input = input
 # Safe input function
 def safe_input(prompt): #prompt = the text you pass when asking the user for input
     user_input = original_input(prompt)  #whatever the user types will be stored in 'user_input'
-    if user_input.lower() in ["x", "exit", "end"]: #converts input to lowercase
+    if user_input.lower() in ["cancel", "exit", "end"]: #converts input to lowercase
         exit_program()
     return user_input
 
