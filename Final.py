@@ -4,6 +4,11 @@ POST_FILE = "posts.txt"
 ENGAGEMENT_FILE = "engagement.txt"
 # REPORT_FILE = "report.txt"
 
+RED = '\033[31m'
+GREEN = '\033[32m'
+YELLOW = '\033[33m'
+RESET = '\033[0m'
+
 
 
 # -----Exit the program gracefully with a goodbye message -----
@@ -53,10 +58,10 @@ def add_post():
     post_id = input("Enter Post ID: ").upper()
     
     if post_id.strip() == "":
-        print("Invalid input. Post ID cannot be empty.")
+        print(f"{RED}Invalid input. Post ID cannot be empty.{RESET}")
         return
     if not post_id.startswith("P"):
-        print("Invalid Post ID. Post ID must start with 'P' (e.g. P011).")
+        print(f"{RED}Invalid Post ID. Post ID must start with 'P' (e.g. P011).{RESET}")
         return
 
     # Check if this Post ID already exists in posts.txt
@@ -82,14 +87,14 @@ def add_post():
         "x": "X"} 
     
     if Platform_input not in platform_names:
-        print("Invalid platform. Must be Instagram, TikTok, or X.")
+        print(f"{RED}Invalid platform. Must be Instagram, TikTok, or X.{RESET}")
         return
     
     # 3. Get Caption (must not be empty)
     caption = input("Enter Caption: ")
     
     if caption.strip() == "":
-        print("Invalid input. Caption cannot be empty.")
+        print(f"{RED}Invalid input. Caption cannot be empty.{RESET}")
         return
     
     # 4. Get Scheduled Date (must be a real date in DD-MM-YYYY format)
@@ -98,7 +103,7 @@ def add_post():
     try:
         datetime.strptime(date, "%d-%m-%Y")
     except ValueError:
-        print("Invalid date. Please use format DD-MM-YYYY.")
+        print(f"{RED}Invalid date. Please use format DD-MM-YYYY.{RESET}")
         return
 
     # 5. New post is Draft by default
@@ -112,7 +117,7 @@ def add_post():
                    date + "|" +
                    status + "\n")
     
-    print("Post added successfully!")
+    print(f"{GREEN}Post added successfully!{RESET}")
 
 
 
@@ -164,7 +169,7 @@ def update_post():
         if new_choice == "1":
             new_status = "Scheduled"
         else:
-            print("Invalid choice. Draft can only move to Scheduled.")
+            print(f"{RED}Invalid choice. Draft can only move to Scheduled.{RESET}")
             return
  
     elif current_status == "Scheduled":
@@ -174,7 +179,7 @@ def update_post():
         if new_choice == "2":
             new_status = "Posted"
         else:
-            print("Invalid choice. Scheduled can only move to Posted.")
+            print(f"{RED}Invalid choice. Scheduled can only move to Posted.{RESET}")
             return
  
     else:
@@ -189,7 +194,7 @@ def update_post():
                 fields[4] = new_status
             file.write("|".join(fields) + "\n")
  
-    print("Status updated successfully.")
+    print(f"{GREEN}Status updated successfully.{RESET}")
 
 
 
@@ -371,7 +376,7 @@ def export_report(instagram_count, tiktok_count, x_count,
     with open("report.txt", "w") as file:
         file.write(report)
 
-    print("\nReport exported successfully!")
+    print(f"{GREEN}\nReport exported successfully!{RESET}")
 
 
 
@@ -402,7 +407,7 @@ def main():
             exit_program()
             break
         else:
-            print("Invalid choice. Please enter a number from 1 to 7.")
+            print(f"{RED}Invalid choice. Please enter a number from 1 to 7.{RESET}")
 
 main() # Runs forevrrrrr, Keeps running the menu after all commands are done until the user chooses Exit
 
