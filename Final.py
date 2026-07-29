@@ -1,7 +1,5 @@
 from datetime import datetime
 
-from datetime import date #lw
-
 def exit_program(): #lw
     print("\nThanks for using the Social Media Planner. Goodbye!")
     exit() #a built-in function that terminates the program immediately.
