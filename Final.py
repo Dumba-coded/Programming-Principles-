@@ -371,7 +371,7 @@ def export_report(instagram_count, tiktok_count, x_count,
     with open("report.txt", "w") as file:
         file.write(report)
 
-    print("Report exported successfully!")
+    print("\nReport exported successfully!")
 
 
 
