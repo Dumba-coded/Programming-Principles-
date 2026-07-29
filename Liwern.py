@@ -19,24 +19,28 @@ def safe_input(prompt): #prompt = the text you pass when asking the user for inp
 input = safe_input #replaces Python's built-in 'input' function with safe_input
 
 #----------------------------------------#
-def export_report(posts_per_platform, best_post, most_interactive_platform, total_posts, avg_engagement):
-    report = "=== PERFORMANCE REPORT ===\n"
-    report += f"Generated on: {date.today()}\n\n"
+def export_report(instagram_count, tiktok_count, x_count,
+                best_post_id, best_platform, best_total,
+                most_interactive_platform, highest_engagement):
+    
 
-    report += "Posts per Platform:\n"
+    report = "=====================================\n"
+    report += "PERFORMANCE REPORT\n"
+    report += "=====================================\n"
+    report += "Total Posts Per Platform\n"
+    report += f"Instagram : {instagram_count}\n"
+    report += f"TikTok    : {tiktok_count}\n"
+    report += f"X         : {x_count}\n\n"
 
-    for platform, data in posts_per_platform.items():
-        report += f"{platform:<10}: {data['posts']} post (Followers: {data['followers']})\n"
+    report += "Best Performing Post\n"
+    report += f"Post ID   : {best_post_id}\n"
+    report += f"Platform  : {best_platform}\n"
+    report += f"Total Engagement: {best_total}\n\n"
 
-    report += "\n"
-    report += f"Best Post: {best_post['id']} ({best_post['platform']}, {best_post['likes']} likes, {best_post['shares']} shares)\n"
-    report += f"Most Interactive Platform: {most_interactive_platform['name']} (Total Engagement: {most_interactive_platform['engagement']})\n"
+    report += "Most Interactive Platform\n"
+    report += f"{most_interactive_platform} (Total Engagement: {highest_engagement})\n"
 
-    report += "\nOverall Stats:\n"
-    report += f"Total Posts: {total_posts}\n"
-    report += f"Average Engagement per Post: {avg_engagement}\n"
-
-    with open("report.txt", "w") as file:
+    with open("performance_report.txt", "w") as file:
         file.write(report)
 
     print("Report exported successfully!")
@@ -62,7 +66,9 @@ def main():
         elif choice == "5":
             generate_performance_report()
         elif choice == "6":
-            export_report() #appears here 
+            export_report(instagram_count, tiktok_count, x_count,
+                best_post_id, best_platform, best_total,
+                most_interactive_platform, highest_engagement) #appears here 
         elif choice == "7":
             break
         else:
