@@ -56,6 +56,18 @@ def add_post():
         print("Invalid Post ID. Post ID must start with 'P' (e.g. P011).")
         return
 
+    # Check if this Post ID already exists in posts.txt
+    try:
+        with open(POST_FILE, "r") as file:
+            existing_lines = file.readlines()
+        for line in existing_lines:
+            fields = line.strip().split("|")
+            if fields[0] == post_id:
+                print("This Post ID already exists.")
+                return
+    except FileNotFoundError:
+        pass # No file yet means no existing posts, so it's fine to continue
+
     # 2. Get Platform (must be one of the 3 allowed platforms)
     platform = input("Enter Platform (Instagram / TikTok / X): ").strip().capitalize()
     
