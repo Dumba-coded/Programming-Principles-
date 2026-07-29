@@ -6,16 +6,22 @@ def exit_program():
     exit() # A built-in function that terminates the program immediately.
 
 
-# Save original input
+
+
+# Save original input.
 original_input = input
 
 
+
+
 # Safe input function
-def safe_input(prompt): #prompt = the text you pass when asking the user for input
-    user_input = original_input(prompt)  #whatever the user types will be stored in 'user_input'
+def safe_input(prompt): # prompt = the text you pass when asking the user for input
+    user_input = original_input(prompt)  # whatever the user types will be stored in 'user_input'
     if user_input.lower() in ["cancel", "exit", "end"]: #converts input to lowercase
         exit_program()
     return user_input
+
+
 
 
 # Override input globally
@@ -24,6 +30,8 @@ input = safe_input #replaces Python's built-in 'input' function with safe_input
 POST_FILE = "posts.txt"
 ENGAGEMENT_FILE = "engagement.txt"
 REPORT_FILE = "report.txt"
+
+
 
 
 # Display all seven program options.
@@ -39,6 +47,8 @@ def display_menu():
     print("5. Generate Performance Report")
     print("6. Export Report to File")
     print("7. Exit")# change to "Press X/type [keyword] (ex.exit) to exit the programm at any given moment"
+
+
 
 
 # Add a new post to the posts.txt file.
