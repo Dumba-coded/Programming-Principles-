@@ -67,7 +67,7 @@ def add_post():
         return
 
     # 2. Get Platform (must be one of the 3 allowed platforms)
-    platform = input("Enter Platform (Instagram / TikTok / X): ")
+    platform = input("Enter Platform (Instagram / TikTok / X): ").strip().lower()
     
     platform_names = {
         "instagram": "Instagram",
@@ -210,7 +210,7 @@ def display_content_calendar():
         return
 
     print("\n=========================================================")
-    print(f"{'POST ID':<10}{'DATE':<13}{'PLATFORM':<15}{'STATUS'}")
+    print(f"{'POST_ID':<10}{'DATE':<13}{'PLATFORM':<15}{'STATUS'}")
     print("=========================================================")
 
     for line in lines:
