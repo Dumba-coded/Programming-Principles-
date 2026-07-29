@@ -33,7 +33,7 @@ def display_menu():
     print("\n=====================================")
     print("SOCIAL MEDIA CONTENT PLANNER")
     print("=====================================")
-    print("1. Add New Post")
+    print("\n1. Add New Post")
     print("2. Update Post Status")
     print("3. Record Engagement Metrics")
     print("4. Display Content Calendar")
