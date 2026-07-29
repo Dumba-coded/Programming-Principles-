@@ -1,14 +1,18 @@
 from datetime import datetime
 
+POST_FILE = "posts.txt"
+ENGAGEMENT_FILE = "engagement.txt"
+REPORT_FILE = "report.txt"
 
 
 
-# Exit the program gracefully with a goodbye message.
+
+# -----Exit the program gracefully with a goodbye message -----
 def exit_program():
     print("\nThanks for using the Social Media Planner. Goodbye!")
     exit() # A built-in function that terminates the program immediately.
 
-# Save original input.
+# Save original input
 original_input = input
 
 # Safe input function
@@ -19,16 +23,12 @@ def safe_input(prompt): # prompt = the text you pass when asking the user for in
     return user_input
 
 # Override input globally
-input = safe_input #replaces Python's built-in 'input' function with safe_input
-
-POST_FILE = "posts.txt"
-ENGAGEMENT_FILE = "engagement.txt"
-REPORT_FILE = "report.txt"
+input = safe_input # Replaces Python's built-in 'input' function with safe_input
 
 
 
 
-# Display all seven program options.
+# ----- Display all seven program options -----
 def display_menu():
     
     print("\n=====================================")
@@ -45,7 +45,7 @@ def display_menu():
 
 
 
-# Add a new post to the posts.txt file.
+# ----- Add a new post to the posts.txt file -----
 def add_post():
     
     print("\n--- Add New Post ---")
@@ -104,7 +104,7 @@ def add_post():
 
 
 
-# Update the status of an existing post.
+# ----- Update the status of an existing post -----
 def update_post():
     
     # 1. Read all existing posts from the file
@@ -181,7 +181,7 @@ def update_post():
 
 
 
-# Allow user to record engagement metrics for a specific post.
+# ----- Allow user to record engagement metrics for a specific post -----
 def record_engagement_metrics():
     
     print(f"\n--- RECORD ENGAGEMENT METRICS ---")
@@ -189,7 +189,7 @@ def record_engagement_metrics():
 
 
 
-# Show the content calendar with all posts and their statuses.
+# ----- Show the content calendar with all posts and their statuses -----
 def display_content_calendar():
 
     try:
@@ -222,7 +222,7 @@ def display_content_calendar():
 
 
 
-# Display a summary of engagement metrics for all posts.
+# ----- Display a summary of engagement metrics for all posts -----
 def generate_performance_report():
 
     # 1. Read posts.txt (we need the platform of every post)
@@ -334,7 +334,7 @@ def generate_performance_report():
 
 
 
-# Export the performance report to a text file.
+# ----- Export the performance report to a text file -----
 def export_report(instagram_count, tiktok_count, x_count,
                 best_post_id, best_platform, best_total,
                 most_interactive_platform, highest_engagement):
@@ -363,14 +363,14 @@ def export_report(instagram_count, tiktok_count, x_count,
 
 
 
-# Main program.
+# ----- Main program -----
 def main():
 
     while True:
         display_menu()
         choice = input("Enter your choice: ").strip()
 
-        # Call the function connected to the selected option.
+        # Call the function connected to the selected option
         if choice == "1":
             add_post()
         elif choice == "2":
