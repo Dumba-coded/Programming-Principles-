@@ -1,18 +1,15 @@
 from datetime import datetime
 
+
+
+
 # Exit the program gracefully with a goodbye message.
 def exit_program():
     print("\nThanks for using the Social Media Planner. Goodbye!")
     exit() # A built-in function that terminates the program immediately.
 
-
-
-
 # Save original input.
 original_input = input
-
-
-
 
 # Safe input function
 def safe_input(prompt): # prompt = the text you pass when asking the user for input
@@ -20,9 +17,6 @@ def safe_input(prompt): # prompt = the text you pass when asking the user for in
     if user_input.lower() in ["cancel", "exit", "end"]: #converts input to lowercase
         exit_program()
     return user_input
-
-
-
 
 # Override input globally
 input = safe_input #replaces Python's built-in 'input' function with safe_input
