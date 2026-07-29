@@ -2,7 +2,7 @@ from datetime import datetime
 
 POST_FILE = "posts.txt"
 ENGAGEMENT_FILE = "engagement.txt"
-#REPORT_FILE = "report.txt"
+# REPORT_FILE = "report.txt"
 
 # -----Exit the program gracefully with a goodbye message -----
 def exit_program():
