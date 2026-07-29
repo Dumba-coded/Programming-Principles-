@@ -29,7 +29,9 @@ REPORT_FILE = "report.txt"
 # Display all seven program options.
 def display_menu():
     
-    print("\n========== SOCIAL MEDIA CONTENT PLANNER ==========")
+    print("\n=====================================")
+    print("SOCIAL MEDIA CONTENT PLANNER")
+    print("=====================================")
     print("1. Add New Post")
     print("2. Update Post Status")
     print("3. Record Engagement Metrics")
@@ -212,7 +214,108 @@ def display_content_calendar():
 
 # Display a summary of engagement metrics for all posts.
 def generate_performance_report():
-    print
+
+    # 1. Read posts.txt (we need the platform of every post)
+    try:
+        with open(POST_FILE, "r") as post_file:
+            post_lines = post_file.readlines()
+    except FileNotFoundError:
+        print("No posts found. Please add a post first.")
+        return
+
+    # 2. Count how many posts belong to each platform
+    instagram_count = 0
+    tiktok_count = 0
+    x_count = 0
+
+    for line in post_lines:
+        fields = line.strip().split("|")
+        post_platform = fields[1]
+
+        if post_platform == "Instagram":
+            instagram_count = instagram_count + 1
+        elif post_platform == "TikTok":
+            tiktok_count = tiktok_count + 1
+        elif post_platform == "X":
+            x_count = x_count + 1
+
+    # 3. Read engagement.txt (we need likes, comments, shares, views)
+    try:
+        with open(ENGAGEMENT_FILE, "r") as engagement_file:
+            engagement_lines = engagement_file.readlines()
+    except FileNotFoundError:
+        print("No engagement data found. Please record engagement first.")
+        return
+
+    # 4. Go through every engagement record to find the best post
+    best_post_id = ""
+    best_platform = ""
+    best_total = -1
+
+    instagram_engagement = 0
+    tiktok_engagement = 0
+    x_engagement = 0
+
+    for e_line in engagement_lines:
+        e_fields = e_line.strip().split("|")
+        post_id = e_fields[0]
+        likes = int(e_fields[1])
+        comments = int(e_fields[2])
+        shares = int(e_fields[3])
+        views = int(e_fields[4])
+
+        total_engagement = likes + comments + shares + views
+
+        # Find out which platform this post belongs to
+        # by searching through the posts we read earlier
+        platform_of_this_post = ""
+        for p_line in post_lines:
+            p_fields = p_line.strip().split("|")
+            if p_fields[0] == post_id:
+                platform_of_this_post = p_fields[1]
+
+        # Add this post's engagement to its platform's total
+        if platform_of_this_post == "Instagram":
+            instagram_engagement = instagram_engagement + total_engagement
+        elif platform_of_this_post == "TikTok":
+            tiktok_engagement = tiktok_engagement + total_engagement
+        elif platform_of_this_post == "X":
+            x_engagement = x_engagement + total_engagement
+
+        # Check if this post is the best one so far
+        if total_engagement > best_total:
+            best_total = total_engagement
+            best_post_id = post_id
+            best_platform = platform_of_this_post
+
+    # 5. Work out which platform has the most total interaction
+    most_interactive_platform = "Instagram"
+    highest_engagement = instagram_engagement
+
+    if tiktok_engagement > highest_engagement:
+        most_interactive_platform = "TikTok"
+        highest_engagement = tiktok_engagement
+
+    if x_engagement > highest_engagement:
+        most_interactive_platform = "X"
+        highest_engagement = x_engagement
+
+    # 6. Print the report
+    print("\n=====================================")
+    print("PERFORMANCE REPORT")
+    print("=====================================")
+    print("Total Posts Per Platform")
+    print("Instagram : " + str(instagram_count))
+    print("TikTok : " + str(tiktok_count))
+    print("X : " + str(x_count))
+
+    print("\nBest Performing Post")
+    print("Post ID : " + best_post_id)
+    print("Platform: " + best_platform)
+    print("Total Engagement: " + str(best_total))
+
+    print("\nMost Interactive Platform")
+    print(most_interactive_platform)
 
     
 def export_report(): #lw
