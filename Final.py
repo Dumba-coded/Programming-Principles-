@@ -56,7 +56,6 @@ def add_post():
         print("Invalid Post ID. Post ID must start with 'P' (e.g. P011).")
         return
 
-
     # 2. Get Platform (must be one of the 3 allowed platforms)
     platform = input("Enter Platform (Instagram / TikTok / X): ")
     
@@ -183,7 +182,6 @@ def record_engagement_metrics():
 # Show the content calendar with all posts and their statuses.
 def display_content_calendar():
 
-
     try:
         with open(POST_FILE, "r") as file:
             lines = file.readlines()
@@ -247,7 +245,6 @@ def generate_performance_report():
         print("No engagement data found. Please record engagement first.")
         return
 
-
     # 4. Go through every engagement record to find the best post
     best_post_id = ""
     best_platform = ""
@@ -268,7 +265,7 @@ def generate_performance_report():
         total_engagement = likes + comments + shares + views
 
         # Find out which platform this post belongs to
-        # by searching through the posts we read earlier
+        # By searching through the posts we read earlier
         platform_of_this_post = ""
         for p_line in post_lines:
             p_fields = p_line.strip().split("|")
@@ -288,7 +285,6 @@ def generate_performance_report():
             best_total = total_engagement
             best_post_id = post_id
             best_platform = platform_of_this_post
-
 
     # 5. Work out which platform has the most total interaction
     most_interactive_platform = "Instagram"
