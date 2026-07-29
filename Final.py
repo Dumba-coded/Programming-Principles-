@@ -6,16 +6,22 @@ def exit_program():
     exit() # A built-in function that terminates the program immediately.
 
 
-# Save original input
+
+
+# Save original input.
 original_input = input
 
 
+
+
 # Safe input function
-def safe_input(prompt): #prompt = the text you pass when asking the user for input
-    user_input = original_input(prompt)  #whatever the user types will be stored in 'user_input'
+def safe_input(prompt): # prompt = the text you pass when asking the user for input
+    user_input = original_input(prompt)  # whatever the user types will be stored in 'user_input'
     if user_input.lower() in ["cancel", "exit", "end"]: #converts input to lowercase
         exit_program()
     return user_input
+
+
 
 
 # Override input globally
@@ -24,6 +30,8 @@ input = safe_input #replaces Python's built-in 'input' function with safe_input
 POST_FILE = "posts.txt"
 ENGAGEMENT_FILE = "engagement.txt"
 REPORT_FILE = "report.txt"
+
+
 
 
 # Display all seven program options.
@@ -41,6 +49,8 @@ def display_menu():
     print("7. Exit")# change to "Press X/type [keyword] (ex.exit) to exit the programm at any given moment"
 
 
+
+
 # Add a new post to the posts.txt file.
 def add_post():
     
@@ -55,7 +65,6 @@ def add_post():
     if not post_id.startswith("P"):
         print("Invalid Post ID. Post ID must start with 'P' (e.g. P011).")
         return
-
 
     # 2. Get Platform (must be one of the 3 allowed platforms)
     platform = input("Enter Platform (Instagram / TikTok / X): ").strip().lower()
@@ -183,7 +192,6 @@ def record_engagement_metrics():
 # Show the content calendar with all posts and their statuses.
 def display_content_calendar():
 
-
     try:
         with open(POST_FILE, "r") as file:
             lines = file.readlines()
@@ -247,7 +255,6 @@ def generate_performance_report():
         print("No engagement data found. Please record engagement first.")
         return
 
-
     # 4. Go through every engagement record to find the best post
     best_post_id = ""
     best_platform = ""
@@ -268,7 +275,7 @@ def generate_performance_report():
         total_engagement = likes + comments + shares + views
 
         # Find out which platform this post belongs to
-        # by searching through the posts we read earlier
+        # By searching through the posts we read earlier
         platform_of_this_post = ""
         for p_line in post_lines:
             p_fields = p_line.strip().split("|")
@@ -288,7 +295,6 @@ def generate_performance_report():
             best_total = total_engagement
             best_post_id = post_id
             best_platform = platform_of_this_post
-
 
     # 5. Work out which platform has the most total interaction
     most_interactive_platform = "Instagram"
@@ -319,27 +325,33 @@ def generate_performance_report():
     print("\nMost Interactive Platform")
     print(most_interactive_platform)
 
+    return (instagram_count, tiktok_count, x_count,
+            best_post_id, best_platform, best_total,
+            most_interactive_platform, highest_engagement)
 
 # Export the performance report to a text file.
-def export_report():
-    posts_per_platform, best_post, most_interactive_platform, total_posts, avg_engagement = generate_performance_report()
-    report = "=== PERFORMANCE REPORT ===\n"
-    report += f"Generated on: {datetime.now()}\n\n"
+def export_report(instagram_count, tiktok_count, x_count,
+                best_post_id, best_platform, best_total,
+                most_interactive_platform, highest_engagement):
+    
 
-    report += "Posts per Platform:\n"
+    report = "=====================================\n"
+    report += "PERFORMANCE REPORT\n"
+    report += "=====================================\n"
+    report += "Total Posts Per Platform\n"
+    report += f"Instagram : {instagram_count}\n"
+    report += f"TikTok    : {tiktok_count}\n"
+    report += f"X         : {x_count}\n\n"
 
-    for platform, data in posts_per_platform.items():
-        report += f"{platform:<10}: {data['posts']} post (Followers: {data['followers']})\n"
+    report += "Best Performing Post\n"
+    report += f"Post ID   : {best_post_id}\n"
+    report += f"Platform  : {best_platform}\n"
+    report += f"Total Engagement: {best_total}\n\n"
 
-    report += "\n"
-    report += f"Best Post: {best_post['id']} ({best_post['platform']}, {best_post['likes']} likes, {best_post['shares']} shares)\n"
-    report += f"Most Interactive Platform: {most_interactive_platform['name']} (Total Engagement: {most_interactive_platform['engagement']})\n"
+    report += "Most Interactive Platform\n"
+    report += f"{most_interactive_platform} (Total Engagement: {highest_engagement})\n"
 
-    report += "\nOverall Stats:\n"
-    report += f"Total Posts: {total_posts}\n"
-    report += f"Average Engagement per Post: {avg_engagement}\n"
-
-    with open("report.txt", "w") as file:
+    with open("performance_report.txt", "w") as file:
         file.write(report)
 
     print("Report exported successfully!")
@@ -364,7 +376,9 @@ def main():
         elif choice == "5":
             generate_performance_report()
         elif choice == "6":
-            export_report()
+            results = generate_performance_report()
+            if results:
+                export_report(*results)  # Unpack the results and pass them to export_report
         elif choice == "7":
             exit_program()
             break
