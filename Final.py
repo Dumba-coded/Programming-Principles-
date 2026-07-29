@@ -7,10 +7,9 @@ POST_FILE = "posts.txt"
 ENGAGEMENT_FILE = "engagement.txt"
 REPORT_FILE = "report.txt"
 
-
+# Display all seven program options.
 def display_menu():
-    """Display all seven program options."""
-
+    
     print("\n========== SOCIAL MEDIA CONTENT PLANNER ==========")
     print("1. Add New Post")
     print("2. Update Post Status")
@@ -20,7 +19,7 @@ def display_menu():
     print("6. Export Report to File")
     print("7. Exit")# change to "Presx/type [keyword] (ex.exit) to exit the programm at any given moment"
 
-
+# Add a new post to the posts.txt file.
 def add_post():
     
     print("\n--- Add New Post ---")
@@ -68,7 +67,7 @@ def add_post():
     print("Post added successfully!")
 
 
-# ---------------- update_status ----------------
+# Update the status of an existing post.
 def update_post():
     
     # 1. Read all existing posts from the file
