@@ -196,7 +196,7 @@ def display_content_calendar():
         return
 
     print("\n=========================================================")
-    print(f"{'POST ID':<10}{'DATE':<13}{'PLATFORM':<15}{'STATUS'}")
+    print(f"{'POST_ID':<10}{'DATE':<13}{'PLATFORM':<15}{'STATUS'}")
     print("=========================================================")
 
     for line in lines:
