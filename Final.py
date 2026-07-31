@@ -52,13 +52,17 @@ def add_post():
     print("\n--- Add New Post ---")
     
     # 1. Get Post ID (must not be empty)
-    post_id = input("\nEnter Post ID: ").upper()
+    post_id = input("\nEnter Post ID: ").strip().upper()
     
     if post_id.strip() == "":
         print("Invalid input. Post ID cannot be empty.")
         return
-    if not post_id.startswith("P"):
-        print("Invalid Post ID. Post ID must start with 'P' (e.g. P011).")
+    if (
+        len(post_id) != 4
+        or not post_id.startswith("P")
+        or not post_id[1:].isdigit()
+    ):
+        print("Invalid Post ID. Use the format P001.")
         return
 
     # Check if this Post ID already exists in posts.txt
@@ -88,14 +92,14 @@ def add_post():
         return
     
     # 3. Get Caption (must not be empty)
-    caption = input("Enter Caption: ")
+    caption = input("Enter Caption: ").strip()
     
-    if caption.strip() == "":
+    if caption == "":
         print("Invalid input. Caption cannot be empty.")
         return
     
     # 4. Get Scheduled Date (must be a real date in DD/MM/YYYY format)
-    date = input("Enter Scheduled Date (DD/MM/YYYY): ")
+    date = input("Enter Scheduled Date (DD/MM/YYYY): ").strip()
     
     try:
         datetime.strptime(date, "%d/%m/%Y")
@@ -168,7 +172,7 @@ def update_post():
         print(fields[0] + " - " + fields[4])
  
     # 3. Ask which Post ID to update
-    target_id = input("\nEnter Post ID: ").upper()
+    target_id = input("\nEnter Post ID: ").strip().upper()
  
     # 4. Find the matching post
     found = False
