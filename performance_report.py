@@ -48,7 +48,7 @@ elif chosen == '2':
       return
 
   def show_available_posts(posts):
-    post_id = input("\nEnter Post ID: ").strip().uppar()
+    post_id = input("\nEnter Post ID: ").strip().upper()
     found_post = None
     for post in posts:
        if post[0].uppar() == post_id:
@@ -145,8 +145,27 @@ elif chosen == "4":
           posts.append(line.split("|"))
     return posts
 
-  def display_calender():
+  def display_calendar():
     posts = read_posts()
 
     if not posts:
       print("No posts found.")
+      return
+    line = "=" * 57
+    print(line)
+
+    print(f"{'POST ID':<10}{'DATE':<13}{'PLATFORM':<14}{'STATUS':<10}")
+    print(line)
+ 
+    for post in posts:
+        post_id = post[0]
+        platform = post[1]
+        date = post[3]
+        status = post[4]
+        print(f"{post_id:<10}{date:<13}{platform:<14}{status:<10}")
+ 
+    print(line)
+ 
+ 
+  if __name__ == "__main__":
+    display_calendar()

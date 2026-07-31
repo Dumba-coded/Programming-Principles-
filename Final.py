@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 
 POST_FILE = "posts.txt"
 ENGAGEMENT_FILE = "engagement.txt"
