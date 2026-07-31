@@ -408,7 +408,7 @@ def main():
 
     while True:
         display_menu()
-        choice = input("Enter your choice: ").strip()
+        choice = input("\nEnter your choice: ").strip()
 
         # Call the function connected to the selected option
         if choice == "1":
