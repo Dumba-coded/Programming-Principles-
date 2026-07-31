@@ -2,13 +2,14 @@ from datetime import datetime
 
 POST_FILE = "posts.txt"
 ENGAGEMENT_FILE = "engagement.txt"
+PLATFORM_FILE = "platforms.txt"
 # REPORT_FILE = "report.txt"
 
 RED = '\033[31m'
 GREEN = '\033[32m'
-YELLOW = '\033[33m'
+BOLD = '\033[33m'
 RESET = '\033[0m'
-
+BOLD = '\033[1m'
 
 
 # -----Exit the program gracefully with a goodbye message -----
@@ -55,7 +56,7 @@ def add_post():
     print("\n--- Add New Post ---")
     
     # 1. Get Post ID (must not be empty)
-    post_id = input("Enter Post ID: ").upper()
+    post_id = input(f"{BOLD}\nEnter Post ID: {RESET}").upper()
     
     if post_id.strip() == "":
         print(f"{RED}Invalid input. Post ID cannot be empty.{RESET}")
@@ -77,7 +78,7 @@ def add_post():
         pass # No file yet means no existing posts, so it's fine to continue
 
     # 2. Get Platform (must be one of the 3 allowed platforms)
-    platform = input("Enter Platform (Instagram / TikTok / X): ").strip().capitalize()
+    platform = input(f"{BOLD}Enter Platform (Instagram / TikTok / X): {RESET}").strip().capitalize()
     
     Platform_input = platform.lower()
     
@@ -91,14 +92,14 @@ def add_post():
         return
     
     # 3. Get Caption (must not be empty)
-    caption = input("Enter Caption: ")
+    caption = input(f"{BOLD}Enter Caption: {RESET}")
     
     if caption.strip() == "":
         print(f"{RED}Invalid input. Caption cannot be empty.{RESET}")
         return
     
     # 4. Get Scheduled Date (must be a real date in DD-MM-YYYY format)
-    date = input("Enter Scheduled Date (DD-MM-YYYY): ")
+    date = input(f"{BOLD}Enter Scheduled Date (DD-MM-YYYY): {RESET}")
     
     try:
         datetime.strptime(date, "%d-%m-%Y")
@@ -116,8 +117,33 @@ def add_post():
                    caption + "|" +
                    date + "|" +
                    status + "\n")
-    
-    print(f"{GREEN}Post added successfully!{RESET}")
+        
+    # 7. Also add a new line to platforms.txt for this post
+    # First, read the current platforms.txt to find existing IDs
+    try:
+        with open(PLATFORM_FILE, "r") as file:
+            platform_lines = file.readlines()
+    except FileNotFoundError:
+        platform_lines = []
+
+    # Work out the next Platform ID by finding the highest existing number
+    highest_number = 0
+    for line in platform_lines:
+        fields = line.strip().split("|")
+        existing_id = fields[0]         # e.g. "PL003"
+        number_part = existing_id[2:]   # removes "PL", leaves "003"
+        if number_part.isdigit():
+            number_value = int(number_part)
+            if number_value > highest_number:
+                highest_number = number_value
+
+    next_number = highest_number + 1
+    new_platform_id = "PL" + str(next_number).zfill(3)  # e.g. PL011
+
+    with open(PLATFORM_FILE, "a") as file:
+        file.write(new_platform_id + "|" + platform + "|0\n")
+
+    print("\nPost added successfully!")
 
 
 
@@ -144,7 +170,7 @@ def update_post():
         print(fields[0] + " - " + fields[4])
  
     # 3. Ask which Post ID to update
-    target_id = input("\nEnter Post ID: ").upper()
+    target_id = input(f"{BOLD}\nEnter Post ID: {RESET}").upper()
  
     # 4. Find the matching post
     found = False
@@ -165,7 +191,7 @@ def update_post():
     if current_status == "Draft":
         print("1. Scheduled")
         print("2. Posted")
-        new_choice = input("Choose new status (1 or 2): ")
+        new_choice = input(f"{BOLD}Choose new status (1 or 2): {RESET}")
         if new_choice == "1":
             new_status = "Scheduled"
         else:
@@ -175,7 +201,7 @@ def update_post():
     elif current_status == "Scheduled":
         print("1. Scheduled")
         print("2. Posted")
-        new_choice = input("Choose new status (1 or 2): ")
+        new_choice = input(f"{BOLD}Choose new status (1 or 2): {RESET}")
         if new_choice == "2":
             new_status = "Posted"
         else:
@@ -386,7 +412,7 @@ def main():
 
     while True:
         display_menu()
-        choice = input("Enter your choice: ").strip()
+        choice = input(f"{BOLD}\nEnter your choice: {RESET}").strip()
 
         # Call the function connected to the selected option
         if choice == "1":
