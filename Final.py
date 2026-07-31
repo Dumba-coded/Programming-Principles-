@@ -8,7 +8,7 @@ PLATFORM_FILE = "platforms.txt"
 
 
 
-# -----Helps allows user to exit the program-----
+# ----- Helps allows user to exit the program -----
 def exit_program():
     print("\nThanks for using the Social Media Planner. Goodbye!")
     exit() # A built-in function that terminates the program immediately.
@@ -17,9 +17,9 @@ def exit_program():
 original_input = input
 
 # Safe input function
-def safe_input(prompt): # prompt = the text you pass when asking the user for input
-    user_input = original_input(prompt)  # whatever the user types will be stored in 'user_input'
-    if user_input.lower() in ["cancel", "exit", "end"]: #converts input to lowercase
+def safe_input(prompt): # Prompt = the text you pass when asking the user for input
+    user_input = original_input(prompt)  # Whatever the user types will be stored in 'user_input'
+    if user_input.lower() in ["cancel", "exit", "end"]: # Converts input to lowercase
         exit_program()
     return user_input
 
@@ -41,7 +41,7 @@ def display_menu():
     print("4. Display Content Calendar")
     print("5. Generate Performance Report")
     print("6. Export Report to File")
-    print("7. Exit")# change to "Press X/type [keyword] (ex.exit) to exit the programm at any given moment"
+    print("7. Exit") # Change to "Press X/type [keyword] (ex.exit) to exit the programm at any given moment"
 
 
 
