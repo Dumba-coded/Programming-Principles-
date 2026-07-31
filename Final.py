@@ -231,7 +231,157 @@ def update_post():
 def record_engagement_metrics():
     
     print(f"\n--- RECORD ENGAGEMENT METRICS ---")
+    print("Only for Posted posts.")
 
+    # 1. Read all posts
+    try:
+        with open(POST_FILE, "r") as file:
+            post_lines = file.readlines()
+    except FileNotFoundError:
+        print("No posts found. Please add a post first.")
+        return
+
+    # 2. Display only posts with the status Posted
+    posted_posts_found = False
+    print("\nAvailable Posted Posts")
+
+    for line in post_lines:
+        if line.strip() == "":
+            continue
+
+        fields = line.strip().split("|")
+
+        if fields[4] == "Posted":
+            print(fields[0] + " - " + fields[1])
+            posted_posts_found = True
+
+    if not posted_posts_found:
+        print("No Posted posts are available.")
+        return
+
+    # 3. Ask the user to select a posted post
+    target_id = input("\nEnter Post ID: ").upper()
+
+    post_found = False
+    selected_platform = ""
+
+    for line in post_lines:
+        if line.strip() == "":
+            continue
+
+        fields = line.strip().split("|")
+
+        if fields[0] == target_id and fields[4] == "Posted":
+            post_found = True
+            selected_platform = fields[1]
+            break
+
+    if not post_found:
+        print("Invalid Post ID. Engagement can only be recorded for a Posted post.")
+        return
+
+    # 4. Get engagement values
+    likes_input = input("Likes: ")
+    comments_input = input("Comments: ")
+    shares_input = input("Shares: ")
+    views_input = input("Views: ")
+    followers_input = input("Follower Count for " + selected_platform + ": ")
+
+    # All values must be non-negative whole numbers
+    if (not likes_input.isdigit() or
+        not comments_input.isdigit() or
+        not shares_input.isdigit() or
+        not views_input.isdigit() or
+        not followers_input.isdigit()):
+        print("Invalid input. All engagement values must be whole numbers.")
+        return
+
+    likes = int(likes_input)
+    comments = int(comments_input)
+    shares = int(shares_input)
+    views = int(views_input)
+    follower_count = int(followers_input)
+
+    # 5. Read existing engagement data
+    try:
+        with open(ENGAGEMENT_FILE, "r") as file:
+            engagement_lines = file.readlines()
+    except FileNotFoundError:
+        engagement_lines = []
+
+    # 6. Update an existing engagement record or add a new one
+    engagement_updated = False
+
+    with open(ENGAGEMENT_FILE, "w") as file:
+        for line in engagement_lines:
+            if line.strip() == "":
+                continue
+
+            fields = line.strip().split("|")
+
+            if fields[0] == target_id:
+                file.write(target_id + "|" +
+                           str(likes) + "|" +
+                           str(comments) + "|" +
+                           str(shares) + "|" +
+                           str(views) + "\n")
+                engagement_updated = True
+            else:
+                file.write(line)
+
+        if not engagement_updated:
+            file.write(target_id + "|" +
+                       str(likes) + "|" +
+                       str(comments) + "|" +
+                       str(shares) + "|" +
+                       str(views) + "\n")
+
+    # 7. Update the follower count in platforms.txt
+    try:
+        with open(PLATFORM_FILE, "r") as file:
+            platform_lines = file.readlines()
+    except FileNotFoundError:
+        platform_lines = []
+
+    platform_updated = False
+    highest_number = 0
+
+    with open(PLATFORM_FILE, "w") as file:
+        for line in platform_lines:
+            if line.strip() == "":
+                continue
+
+            fields = line.strip().split("|")
+            platform_id = fields[0]
+            platform_name = fields[1]
+
+            number_part = platform_id[2:]
+            if number_part.isdigit():
+                number_value = int(number_part)
+                if number_value > highest_number:
+                    highest_number = number_value
+
+            if platform_name == selected_platform:
+                file.write(platform_id + "|" +
+                           platform_name + "|" +
+                           str(follower_count) + "\n")
+                platform_updated = True
+            else:
+                file.write(line)
+
+        # Backup: add the platform if it is missing
+        if not platform_updated:
+            new_platform_id = "PL" + str(highest_number + 1).zfill(3)
+            file.write(new_platform_id + "|" +
+                       selected_platform + "|" +
+                       str(follower_count) + "\n")
+
+    print("\nEngagement recorded successfully.")
+    print("Follower count updated in platforms.txt.")
+
+
+
+# ----- Show the content calendar with all posts and their statuses -----
 
 
 
