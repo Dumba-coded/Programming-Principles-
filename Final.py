@@ -99,7 +99,7 @@ def add_post():
         return
     
     # 4. Get Scheduled Date (must be a real date in DD-MM-YYYY format)
-    date = input(f"{BOLD} Enter Scheduled Date (DD-MM-YYYY): {RESET}")
+    date = input(f"{BOLD}Enter Scheduled Date (DD-MM-YYYY): {RESET}")
     
     try:
         datetime.strptime(date, "%d-%m-%Y")
