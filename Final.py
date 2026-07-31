@@ -14,7 +14,7 @@ BOLD = '\033[1m'
 
 # -----Exit the program gracefully with a goodbye message -----
 def exit_program():
-    print("\nThanks for using the Social Media Planner. Goodbye!")
+    print(f"\n{GREEN}Thanks for using the Social Media Planner. Goodbye!{RESET}")
     exit() # A built-in function that terminates the program immediately.
 
 # Save original input
@@ -143,7 +143,7 @@ def add_post():
     with open(PLATFORM_FILE, "a") as file:
         file.write(new_platform_id + "|" + platform + "|0\n")
 
-    print("\nPost added successfully!")
+    print(f"\n{GREEN}Post added successfully!{RESET}")
 
 
 
@@ -156,18 +156,18 @@ def update_post():
         with open(POST_FILE, "r") as file:
             lines = file.readlines()
     except FileNotFoundError: # Catch the error if the file does not exist
-        print("No posts found. Please add a post first.")
+        print(f"{RED}No posts found. Please add a post first.{RESET}")
         return
  
     if len(lines) == 0:
-        print("No posts found. Please add a post first.")
+        print(f"{RED}No posts found. Please add a post first.{RESET}")
         return
  
     # 2. Show all available posts with their current status
     print("\nAvailable Posts")
     for line in lines:
         fields = line.strip().split("|")
-        print(fields[0] + " - " + fields[4])
+        print(f"{fields[0]} - {fields[4]}")
  
     # 3. Ask which Post ID to update
     target_id = input(f"{BOLD}\nEnter Post ID: {RESET}").upper()
@@ -182,10 +182,10 @@ def update_post():
             break
  
     if not found:
-        print("Post ID not found.")
+        print(f"{RED}Post ID not found.{RESET}")
         return
  
-    print("Current Status: " + current_status)
+    print(f"Current Status: {current_status}")
  
     # 5. Only allow the correct next status
     if current_status == "Draft":
@@ -209,7 +209,7 @@ def update_post():
             return
  
     else:
-        print("This post is already Posted. No further update possible.")
+        print(f"{RED}This post is already Posted. No further update possible.{RESET}")
         return
  
     # 6. Rebuild the file with the updated status for the matching post
@@ -240,11 +240,11 @@ def display_content_calendar():
         with open(POST_FILE, "r") as file:
             lines = file.readlines()
     except FileNotFoundError:
-        print("No posts found.")
+        print(f"{RED}No posts found. Please add a post first.{RESET}")
         return
 
     if len(lines) == 0:
-        print("No posts found.")
+        print(f"{RED}No posts found. Please add a post first.{RESET}")
         return
 
     print("\n=========================================================")
@@ -274,7 +274,7 @@ def generate_performance_report():
         with open(POST_FILE, "r") as post_file:
             post_lines = post_file.readlines()
     except FileNotFoundError:
-        print("No posts found. Please add a post first.")
+        print(f"{RED}No posts found. Please add a post first.{RESET}")
         return
 
     # 2. Count how many posts belong to each platform
@@ -298,7 +298,7 @@ def generate_performance_report():
         with open(ENGAGEMENT_FILE, "r") as engagement_file:
             engagement_lines = engagement_file.readlines()
     except FileNotFoundError:
-        print("No engagement data found. Please record engagement first.")
+        print(f"{RED}No engagement data found. Please record engagement first.{RESET}")
         return
 
     # 4. Go through every engagement record to find the best post
@@ -359,9 +359,9 @@ def generate_performance_report():
     print("PERFORMANCE REPORT")
     print("=====================================")
     print("Total Posts Per Platform")
-    print("Instagram : " + str(instagram_count))
-    print("TikTok : " + str(tiktok_count))
-    print("X : " + str(x_count))
+    print(f"Instagram : {instagram_count}")
+    print(f"TikTok : {tiktok_count}")
+    print(f"X : {x_count}")
 
     print("\nBest Performing Post")
     print("Post ID : " + best_post_id)
