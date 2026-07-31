@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 
 POST_FILE = "posts.txt"
 ENGAGEMENT_FILE = "engagement.txt"
@@ -223,42 +223,7 @@ def update_post():
 
 # ----- Allow user to record engagement metrics for a specific post -----
 def record_engagement_metrics():
-    
-    print(f"\n--- RECORD ENGAGEMENT METRICS ---")
-
-
-
-
-# ----- Show the content calendar with all posts and their statuses -----
-def display_content_calendar():
-
-    try:
-        with open(POST_FILE, "r") as file:
-            lines = file.readlines()
-    except FileNotFoundError:
-        print("No posts found. Please add a post first.")
-        return
-
-    if len(lines) == 0:
-        print("No posts found. Please add a post first.")
-        return
-
-    print("\n=========================================================")
-    print(f"{'POST_ID':<10}{'DATE':<13}{'PLATFORM':<15}{'STATUS'}")
-    print("=========================================================")
-
-    for line in lines:
-        fields = line.strip().split("|")
-
-        post_id = fields[0]
-        platform = fields[1]
-        date = fields[3].replace("-", "/")   # Changes DD-MM-YYYY to DD/MM/YYYY
-        status = fields[4]
-
-        print(f"{post_id:<10}{date:<13}{platform:<15}{status}")
-
-    print("=========================================================")
-
+    print()
 
 
 
