@@ -58,8 +58,7 @@ def add_post():
         print("Invalid input. Post ID cannot be empty.")
         return
     if (
-        len(post_id) != 4
-        or not post_id.startswith("P")
+        not post_id.startswith("P")
         or not post_id[1:].isdigit()
     ):
         print("Invalid Post ID. Use the format P001.")
