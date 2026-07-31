@@ -55,7 +55,7 @@ def add_post():
     print("\n--- Add New Post ---")
     
     # 1. Get Post ID (must not be empty)
-    post_id = input("Enter Post ID: ").upper()
+    post_id = input(f"{YELLOW}Enter Post ID:{RESET} ").upper()
     
     if post_id.strip() == "":
         print(f"{RED}Invalid input. Post ID cannot be empty.{RESET}")
@@ -77,7 +77,7 @@ def add_post():
         pass # No file yet means no existing posts, so it's fine to continue
 
     # 2. Get Platform (must be one of the 3 allowed platforms)
-    platform = input("Enter Platform (Instagram / TikTok / X): ").strip().capitalize()
+    platform = input(f"{YELLOW}Enter Platform (Instagram / TikTok / X): {RESET}").strip().capitalize()
     
     Platform_input = platform.lower()
     
@@ -91,14 +91,14 @@ def add_post():
         return
     
     # 3. Get Caption (must not be empty)
-    caption = input("Enter Caption: ")
+    caption = input(f"{YELLOW}Enter Caption: {RESET}")
     
     if caption.strip() == "":
         print(f"{RED}Invalid input. Caption cannot be empty.{RESET}")
         return
     
     # 4. Get Scheduled Date (must be a real date in DD-MM-YYYY format)
-    date = input("Enter Scheduled Date (DD-MM-YYYY): ")
+    date = input(f"{YELLOW} Enter Scheduled Date (DD-MM-YYYY): {RESET}")
     
     try:
         datetime.strptime(date, "%d-%m-%Y")
@@ -144,7 +144,7 @@ def update_post():
         print(fields[0] + " - " + fields[4])
  
     # 3. Ask which Post ID to update
-    target_id = input("\nEnter Post ID: ").upper()
+    target_id = input(f"{YELLOW}\nEnter Post ID: {RESET}").upper()
  
     # 4. Find the matching post
     found = False
@@ -165,7 +165,7 @@ def update_post():
     if current_status == "Draft":
         print("1. Scheduled")
         print("2. Posted")
-        new_choice = input("Choose new status (1 or 2): ")
+        new_choice = input(f"{YELLOW}Choose new status (1 or 2): {RESET}")
         if new_choice == "1":
             new_status = "Scheduled"
         else:
@@ -175,7 +175,7 @@ def update_post():
     elif current_status == "Scheduled":
         print("1. Scheduled")
         print("2. Posted")
-        new_choice = input("Choose new status (1 or 2): ")
+        new_choice = input(f"{YELLOW}Choose new status (1 or 2): {RESET}")
         if new_choice == "2":
             new_status = "Posted"
         else:
@@ -386,7 +386,7 @@ def main():
 
     while True:
         display_menu()
-        choice = input("Enter your choice: ").strip()
+        choice = input(f"{YELLOW}\nEnter your choice: {RESET}").strip()
 
         # Call the function connected to the selected option
         if choice == "1":
