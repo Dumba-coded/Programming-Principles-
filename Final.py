@@ -5,16 +5,12 @@ ENGAGEMENT_FILE = "engagement.txt"
 PLATFORM_FILE = "platforms.txt"
 # REPORT_FILE = "report.txt"
 
-RED = '\033[31m'
-GREEN = '\033[32m'
-BOLD = '\033[33m'
-RESET = '\033[0m'
-BOLD = '\033[1m'
+
 
 
 # -----Exit the program gracefully with a goodbye message -----
 def exit_program():
-    print(f"\n{GREEN}Thanks for using the Social Media Planner. Goodbye!{RESET}")
+    print("\nThanks for using the Social Media Planner. Goodbye!")
     exit() # A built-in function that terminates the program immediately.
 
 # Save original input
@@ -56,13 +52,13 @@ def add_post():
     print("\n--- Add New Post ---")
     
     # 1. Get Post ID (must not be empty)
-    post_id = input(f"{BOLD}\nEnter Post ID: {RESET}").upper()
+    post_id = input("\nEnter Post ID: ").upper()
     
     if post_id.strip() == "":
-        print(f"{RED}Invalid input. Post ID cannot be empty.{RESET}")
+        print("Invalid input. Post ID cannot be empty.")
         return
     if not post_id.startswith("P"):
-        print(f"{RED}Invalid Post ID. Post ID must start with 'P' (e.g. P011).{RESET}")
+        print("Invalid Post ID. Post ID must start with 'P' (e.g. P011).")
         return
 
     # Check if this Post ID already exists in posts.txt
@@ -78,7 +74,7 @@ def add_post():
         pass # No file yet means no existing posts, so it's fine to continue
 
     # 2. Get Platform (must be one of the 3 allowed platforms)
-    platform = input(f"{BOLD}Enter Platform (Instagram / TikTok / X): {RESET}").strip().capitalize()
+    platform = input("Enter Platform (Instagram / TikTok / X): ").strip().capitalize()
     
     Platform_input = platform.lower()
     
@@ -88,23 +84,23 @@ def add_post():
         "x": "X"} 
     
     if Platform_input not in platform_names:
-        print(f"{RED}Invalid platform. Must be Instagram, TikTok, or X.{RESET}")
+        print("Invalid platform. Must be Instagram, TikTok, or X.")
         return
     
     # 3. Get Caption (must not be empty)
-    caption = input(f"{BOLD}Enter Caption: {RESET}")
+    caption = input("Enter Caption: ")
     
     if caption.strip() == "":
-        print(f"{RED}Invalid input. Caption cannot be empty.{RESET}")
+        print("Invalid input. Caption cannot be empty.")
         return
     
     # 4. Get Scheduled Date (must be a real date in DD-MM-YYYY format)
-    date = input(f"{BOLD}Enter Scheduled Date (DD-MM-YYYY): {RESET}")
+    date = input("Enter Scheduled Date (DD-MM-YYYY): ")
     
     try:
         datetime.strptime(date, "%d-%m-%Y")
     except ValueError:
-        print(f"{RED}Invalid date. Please use format DD-MM-YYYY.{RESET}")
+        print("Invalid date. Please use format DD-MM-YYYY.")
         return
 
     # 5. New post is Draft by default
@@ -143,7 +139,7 @@ def add_post():
     with open(PLATFORM_FILE, "a") as file:
         file.write(new_platform_id + "|" + platform + "|0\n")
 
-    print(f"\n{GREEN}Post added successfully!{RESET}")
+    print("\nPost added successfully!")
 
 
 
@@ -156,11 +152,11 @@ def update_post():
         with open(POST_FILE, "r") as file:
             lines = file.readlines()
     except FileNotFoundError: # Catch the error if the file does not exist
-        print(f"{RED}No posts found. Please add a post first.{RESET}")
+        print("No posts found. Please add a post first.")
         return
  
     if len(lines) == 0:
-        print(f"{RED}No posts found. Please add a post first.{RESET}")
+        print("No posts found. Please add a post first.")
         return
  
     # 2. Show all available posts with their current status
@@ -170,7 +166,7 @@ def update_post():
         print(f"{fields[0]} - {fields[4]}")
  
     # 3. Ask which Post ID to update
-    target_id = input(f"{BOLD}\nEnter Post ID: {RESET}").upper()
+    target_id = input("\nEnter Post ID: ").upper()
  
     # 4. Find the matching post
     found = False
@@ -182,7 +178,7 @@ def update_post():
             break
  
     if not found:
-        print(f"{RED}Post ID not found.{RESET}")
+        print("Post ID not found.")
         return
  
     print(f"Current Status: {current_status}")
@@ -191,25 +187,25 @@ def update_post():
     if current_status == "Draft":
         print("1. Scheduled")
         print("2. Posted")
-        new_choice = input(f"{BOLD}Choose new status (1 or 2): {RESET}")
+        new_choice = input("Choose new status (1 or 2): ")
         if new_choice == "1":
             new_status = "Scheduled"
         else:
-            print(f"{RED}Invalid choice. Draft can only move to Scheduled.{RESET}")
+            print("Invalid choice. Draft can only move to Scheduled.")
             return
  
     elif current_status == "Scheduled":
         print("1. Scheduled")
         print("2. Posted")
-        new_choice = input(f"{BOLD}Choose new status (1 or 2): {RESET}")
+        new_choice = input("Choose new status (1 or 2): ")
         if new_choice == "2":
             new_status = "Posted"
         else:
-            print(f"{RED}Invalid choice. Scheduled can only move to Posted.{RESET}")
+            print("Invalid choice. Scheduled can only move to Posted.")
             return
  
     else:
-        print(f"{RED}This post is already Posted. No further update possible.{RESET}")
+        print("This post is already Posted. No further update possible.")
         return
  
     # 6. Rebuild the file with the updated status for the matching post
@@ -220,7 +216,7 @@ def update_post():
                 fields[4] = new_status
             file.write("|".join(fields) + "\n")
  
-    print(f"{GREEN}Status updated successfully.{RESET}")
+    print("Status updated successfully.")
 
 
 
@@ -240,11 +236,11 @@ def display_content_calendar():
         with open(POST_FILE, "r") as file:
             lines = file.readlines()
     except FileNotFoundError:
-        print(f"{RED}No posts found. Please add a post first.{RESET}")
+        print("No posts found. Please add a post first.")
         return
 
     if len(lines) == 0:
-        print(f"{RED}No posts found. Please add a post first.{RESET}")
+        print("No posts found. Please add a post first.")
         return
 
     print("\n=========================================================")
@@ -274,7 +270,7 @@ def generate_performance_report():
         with open(POST_FILE, "r") as post_file:
             post_lines = post_file.readlines()
     except FileNotFoundError:
-        print(f"{RED}No posts found. Please add a post first.{RESET}")
+        print("No posts found. Please add a post first.")
         return
 
     # 2. Count how many posts belong to each platform
@@ -298,7 +294,7 @@ def generate_performance_report():
         with open(ENGAGEMENT_FILE, "r") as engagement_file:
             engagement_lines = engagement_file.readlines()
     except FileNotFoundError:
-        print(f"{RED}No engagement data found. Please record engagement first.{RESET}")
+        print("No engagement data found. Please record engagement first.")
         return
 
     # 4. Go through every engagement record to find the best post
@@ -402,7 +398,7 @@ def export_report(instagram_count, tiktok_count, x_count,
     with open("report.txt", "w") as file:
         file.write(report)
 
-    print(f"{GREEN}\nReport exported successfully!{RESET}")
+    print("\nReport exported successfully!")
 
 
 
@@ -412,7 +408,7 @@ def main():
 
     while True:
         display_menu()
-        choice = input(f"{BOLD}\nEnter your choice: {RESET}").strip()
+        choice = input("Enter your choice: ").strip()
 
         # Call the function connected to the selected option
         if choice == "1":
@@ -433,7 +429,7 @@ def main():
             exit_program()
             break
         else:
-            print(f"{RED}Invalid choice. Please enter a number from 1 to 7.{RESET}")
+            print("Invalid choice. Please enter a number from 1 to 7.")
 
 main() # Runs forevrrrrr, Keeps running the menu after all commands are done until the user chooses Exit
 
