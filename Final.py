@@ -162,6 +162,8 @@ def update_post():
     # 2. Show all available posts with their current status
     print("\nAvailable Posts")
     for line in lines:
+        if line.strip() == "":
+            continue  # skip blank lines
         fields = line.strip().split("|")
         print(f"{fields[0]} - {fields[4]}")
  
@@ -171,6 +173,8 @@ def update_post():
     # 4. Find the matching post
     found = False
     for line in lines:
+        if line.strip() == "":
+            continue  # skip blank lines
         fields = line.strip().split("|")
         if fields[0] == target_id:
             found = True
@@ -211,6 +215,8 @@ def update_post():
     # 6. Rebuild the file with the updated status for the matching post
     with open(POST_FILE, "w") as file:
         for line in lines:
+            if line.strip() == "":
+                continue  # skip blank lines
             fields = line.strip().split("|")
             if fields[0] == target_id:
                 fields[4] = new_status
