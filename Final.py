@@ -380,7 +380,6 @@ def record_engagement_metrics():
                        str(follower_count) + "\n")
 
     print("\nEngagement recorded successfully.")
-    print("Follower count updated in platforms.txt.")
 
 
 
