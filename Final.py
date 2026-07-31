@@ -8,7 +8,7 @@ PLATFORM_FILE = "platforms.txt"
 
 
 
-# -----Exit the program gracefully with a goodbye message -----
+# -----Helps allows user to exit the program-----
 def exit_program():
     print("\nThanks for using the Social Media Planner. Goodbye!")
     exit() # A built-in function that terminates the program immediately.
@@ -94,13 +94,13 @@ def add_post():
         print("Invalid input. Caption cannot be empty.")
         return
     
-    # 4. Get Scheduled Date (must be a real date in DD-MM-YYYY format)
-    date = input("Enter Scheduled Date (DD-MM-YYYY): ")
+    # 4. Get Scheduled Date (must be a real date in DD/MM/YYYY format)
+    date = input("Enter Scheduled Date (DD/MM/YYYY): ")
     
     try:
-        datetime.strptime(date, "%d-%m-%Y")
+        datetime.strptime(date, "%d/%m/%Y")
     except ValueError:
-        print("Invalid date. Please use format DD-MM-YYYY.")
+        print("Invalid date. Please use format DD/MM/YYYY.")
         return
 
     # 5. New post is Draft by default
@@ -162,8 +162,10 @@ def update_post():
     # 2. Show all available posts with their current status
     print("\nAvailable Posts")
     for line in lines:
+        if line.strip() == "":
+            continue  # skip blank lines
         fields = line.strip().split("|")
-        print(f"{fields[0]} - {fields[4]}")
+        print(fields[0] + " - " + fields[4])
  
     # 3. Ask which Post ID to update
     target_id = input("\nEnter Post ID: ").upper()
@@ -171,6 +173,8 @@ def update_post():
     # 4. Find the matching post
     found = False
     for line in lines:
+        if line.strip() == "":
+            continue  # skip blank lines
         fields = line.strip().split("|")
         if fields[0] == target_id:
             found = True
@@ -181,7 +185,7 @@ def update_post():
         print("Post ID not found.")
         return
  
-    print(f"Current Status: {current_status}")
+    print("Current Status: " + current_status)
  
     # 5. Only allow the correct next status
     if current_status == "Draft":
@@ -211,6 +215,8 @@ def update_post():
     # 6. Rebuild the file with the updated status for the matching post
     with open(POST_FILE, "w") as file:
         for line in lines:
+            if line.strip() == "":
+                continue  # skip blank lines
             fields = line.strip().split("|")
             if fields[0] == target_id:
                 fields[4] = new_status
@@ -223,7 +229,198 @@ def update_post():
 
 # ----- Allow user to record engagement metrics for a specific post -----
 def record_engagement_metrics():
-    print()
+    
+    print(f"\n--- RECORD ENGAGEMENT METRICS ---")
+    print("Only for Posted posts.")
+
+    # 1. Read all posts
+    try:
+        with open(POST_FILE, "r") as file:
+            post_lines = file.readlines()
+    except FileNotFoundError:
+        print("No posts found. Please add a post first.")
+        return
+
+    # 2. Display only posts with the status Posted
+    posted_posts_found = False
+    print("\nAvailable Posted Posts")
+
+    for line in post_lines:
+        if line.strip() == "":
+            continue
+
+        fields = line.strip().split("|")
+
+        if fields[4] == "Posted":
+            print(fields[0] + " - " + fields[1])
+            posted_posts_found = True
+
+    if not posted_posts_found:
+        print("No Posted posts are available.")
+        return
+
+    # 3. Ask the user to select a posted post
+    target_id = input("\nEnter Post ID: ").upper()
+
+    post_found = False
+    selected_platform = ""
+
+    for line in post_lines:
+        if line.strip() == "":
+            continue
+
+        fields = line.strip().split("|")
+
+        if fields[0] == target_id and fields[4] == "Posted":
+            post_found = True
+            selected_platform = fields[1]
+            break
+
+    if not post_found:
+        print("Invalid Post ID. Engagement can only be recorded for a Posted post.")
+        return
+
+    # 4. Get engagement values
+    likes_input = input("Likes: ")
+    comments_input = input("Comments: ")
+    shares_input = input("Shares: ")
+    views_input = input("Views: ")
+    followers_input = input("Follower Count for " + selected_platform + ": ")
+
+    # All values must be non-negative whole numbers
+    if (not likes_input.isdigit() or
+        not comments_input.isdigit() or
+        not shares_input.isdigit() or
+        not views_input.isdigit() or
+        not followers_input.isdigit()):
+        print("Invalid input. All engagement values must be whole numbers.")
+        return
+
+    likes = int(likes_input)
+    comments = int(comments_input)
+    shares = int(shares_input)
+    views = int(views_input)
+    follower_count = int(followers_input)
+
+    # 5. Read existing engagement data
+    try:
+        with open(ENGAGEMENT_FILE, "r") as file:
+            engagement_lines = file.readlines()
+    except FileNotFoundError:
+        engagement_lines = []
+
+    # 6. Update an existing engagement record or add a new one
+    engagement_updated = False
+
+    with open(ENGAGEMENT_FILE, "w") as file:
+        for line in engagement_lines:
+            if line.strip() == "":
+                continue
+
+            fields = line.strip().split("|")
+
+            if fields[0] == target_id:
+                file.write(target_id + "|" +
+                           str(likes) + "|" +
+                           str(comments) + "|" +
+                           str(shares) + "|" +
+                           str(views) + "\n")
+                engagement_updated = True
+            else:
+                file.write(line)
+
+        if not engagement_updated:
+            file.write(target_id + "|" +
+                       str(likes) + "|" +
+                       str(comments) + "|" +
+                       str(shares) + "|" +
+                       str(views) + "\n")
+
+    # 7. Update the follower count in platforms.txt
+    try:
+        with open(PLATFORM_FILE, "r") as file:
+            platform_lines = file.readlines()
+    except FileNotFoundError:
+        platform_lines = []
+
+    platform_updated = False
+    highest_number = 0
+
+    with open(PLATFORM_FILE, "w") as file:
+        for line in platform_lines:
+            if line.strip() == "":
+                continue
+
+            fields = line.strip().split("|")
+            platform_id = fields[0]
+            platform_name = fields[1]
+
+            number_part = platform_id[2:]
+            if number_part.isdigit():
+                number_value = int(number_part)
+                if number_value > highest_number:
+                    highest_number = number_value
+
+            if platform_name == selected_platform:
+                file.write(platform_id + "|" +
+                           platform_name + "|" +
+                           str(follower_count) + "\n")
+                platform_updated = True
+            else:
+                file.write(line)
+
+        # Backup: add the platform if it is missing
+        if not platform_updated:
+            new_platform_id = "PL" + str(highest_number + 1).zfill(3)
+            file.write(new_platform_id + "|" +
+                       selected_platform + "|" +
+                       str(follower_count) + "\n")
+
+    print("\nEngagement recorded successfully.")
+    print("Follower count updated in platforms.txt.")
+
+
+
+# ----- Show the content calendar with all posts and their statuses -----
+
+
+
+# ----- Show the content calendar with all posts and their statuses -----
+def display_content_calendar():
+
+    try:
+        with open(POST_FILE, "r") as file:
+            lines = file.readlines()
+    except FileNotFoundError:
+
+        print("No posts found.")
+        return
+
+    if len(lines) == 0:
+        print("No posts found.")
+        print("No posts found. Please add a post first.")
+        return
+
+    if len(lines) == 0:
+        print("No posts found. Please add a post first.")
+        return
+
+    print("\n=========================================================")
+    print(f"{'POST_ID':<10}{'DATE':<13}{'PLATFORM':<15}{'STATUS'}")
+    print("=========================================================")
+
+    for line in lines:
+        fields = line.strip().split("|")
+
+        post_id = fields[0]
+        platform = fields[1]
+        date = fields[3].replace("-", "/")   # Changes DD-MM-YYYY to DD/MM/YYYY
+        status = fields[4]
+
+        print(f"{post_id:<10}{date:<13}{platform:<15}{status}")
+
+    print("=========================================================")
+
 
 
 
@@ -320,9 +517,9 @@ def generate_performance_report():
     print("PERFORMANCE REPORT")
     print("=====================================")
     print("Total Posts Per Platform")
-    print(f"Instagram : {instagram_count}")
-    print(f"TikTok : {tiktok_count}")
-    print(f"X : {x_count}")
+    print("Instagram : " + str(instagram_count))
+    print("TikTok : " + str(tiktok_count))
+    print("X : " + str(x_count))
 
     print("\nBest Performing Post")
     print("Post ID : " + best_post_id)
