@@ -94,13 +94,13 @@ def add_post():
         print("Invalid input. Caption cannot be empty.")
         return
     
-    # 4. Get Scheduled Date (must be a real date in DD-MM-YYYY format)
-    date = input("Enter Scheduled Date (DD-MM-YYYY): ")
+    # 4. Get Scheduled Date (must be a real date in DD/MM/YYYY format)
+    date = input("Enter Scheduled Date (DD/MM/YYYY): ")
     
     try:
-        datetime.strptime(date, "%d-%m-%Y")
+        datetime.strptime(date, "%d/%m/%Y")
     except ValueError:
-        print("Invalid date. Please use format DD-MM-YYYY.")
+        print("Invalid date. Please use format DD/MM/YYYY.")
         return
 
     # 5. New post is Draft by default
