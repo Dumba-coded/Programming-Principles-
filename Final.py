@@ -2,6 +2,7 @@ from datetime import datetime
 
 POST_FILE = "posts.txt"
 ENGAGEMENT_FILE = "engagement.txt"
+PLATFORM_FILE = "platforms.txt"
 # REPORT_FILE = "report.txt"
 
 RED = '\033[31m'
@@ -55,7 +56,7 @@ def add_post():
     print("\n--- Add New Post ---")
     
     # 1. Get Post ID (must not be empty)
-    post_id = input(f"{YELLOW}Enter Post ID:{RESET} ").upper()
+    post_id = input("\nEnter Post ID: ").upper()
     
     if post_id.strip() == "":
         print(f"{RED}Invalid input. Post ID cannot be empty.{RESET}")
@@ -116,8 +117,33 @@ def add_post():
                    caption + "|" +
                    date + "|" +
                    status + "\n")
-    
-    print(f"{GREEN}Post added successfully!{RESET}")
+        
+    # 7. Also add a new line to platforms.txt for this post
+    # First, read the current platforms.txt to find existing IDs
+    try:
+        with open(PLATFORM_FILE, "r") as file:
+            platform_lines = file.readlines()
+    except FileNotFoundError:
+        platform_lines = []
+
+    # Work out the next Platform ID by finding the highest existing number
+    highest_number = 0
+    for line in platform_lines:
+        fields = line.strip().split("|")
+        existing_id = fields[0]         # e.g. "PL003"
+        number_part = existing_id[2:]   # removes "PL", leaves "003"
+        if number_part.isdigit():
+            number_value = int(number_part)
+            if number_value > highest_number:
+                highest_number = number_value
+
+    next_number = highest_number + 1
+    new_platform_id = "PL" + str(next_number).zfill(3)  # e.g. PL011
+
+    with open(PLATFORM_FILE, "a") as file:
+        file.write(new_platform_id + "|" + platform + "|0\n")
+
+    print("\nPost added successfully!")
 
 
 
