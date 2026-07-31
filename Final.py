@@ -381,9 +381,6 @@ def record_engagement_metrics():
 
 
 
-# ----- Show the content calendar with all posts and their statuses -----
-
-
 
 # ----- Show the content calendar with all posts and their statuses -----
 def display_content_calendar():
@@ -414,7 +411,7 @@ def display_content_calendar():
 
         post_id = fields[0]
         platform = fields[1]
-        date = fields[3].replace("-", "/")   # Changes DD-MM-YYYY to DD/MM/YYYY
+        date = fields[3]
         status = fields[4]
 
         print(f"{post_id:<10}{date:<13}{platform:<15}{status}")
