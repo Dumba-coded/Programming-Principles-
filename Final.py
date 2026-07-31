@@ -74,7 +74,7 @@ def add_post():
         pass # No file yet means no existing posts, so it's fine to continue
 
     # 2. Get Platform (must be one of the 3 allowed platforms)
-    platform = input("\nEnter Platform (Instagram / TikTok / X): ").strip().capitalize()
+    platform = input("Enter Platform (Instagram / TikTok / X): ").strip().capitalize()
     
     Platform_input = platform.lower()
     
