@@ -244,7 +244,7 @@ def record_engagement_metrics():
         print("No posts found. Please add a post first.")
         return
 
-    # 2. Display only posts with the status Posted
+    # 2. ay only posts with the status Posted
     posted_posts_found = False
     print("\nAvailable Posted Posts")
 
@@ -395,10 +395,6 @@ def display_content_calendar():
         print("No posts found.")
         return
 
-    if len(lines) == 0:
-        print("No posts found.")
-        print("No posts found. Please add a post first.")
-        return
 
     if len(lines) == 0:
         print("No posts found. Please add a post first.")
